@@ -1,33 +1,26 @@
 package com.dreamIsland.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.registry.infomodel.User;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.dreamIsland.dao.UserDao;
+import com.dreamIsland.model.User;
 import com.dreamIsland.service.IUserService;
 
+
 @Controller  
-@RequestMapping("/user")  
+@RequestMapping("user")  
 public class DreamIslandController {
 
-	 @Resource  
+	 	@Resource  
 	    private IUserService userService;  
 	      
-	    @RequestMapping("/showUser")  
-	    public String toIndex(HttpServletRequest request,Model model){  
-	        int userId = Integer.parseInt(request.getParameter("id"));  
-	        User user = this.userService.getUserById(userId);  
-	        model.addAttribute("user", user);  
-	        return "showUser";  
+	    @RequestMapping("showUser")  
+	    public ModelAndView toIndex(Integer userId){  
+	        User user = userService.getUserById(userId);  
+	        return new ModelAndView("user","user",user);  
 		
 	}
 

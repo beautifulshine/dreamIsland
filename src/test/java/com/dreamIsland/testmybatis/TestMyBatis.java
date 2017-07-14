@@ -1,10 +1,23 @@
 package com.dreamIsland.testmybatis;
 
+import javax.annotation.Resource;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.alibaba.fastjson.JSON;
+import com.dreamIsland.model.User;
+import com.dreamIsland.service.IUserService;
+
 @RunWith(SpringJUnit4ClassRunner.class)     //表示继承了SpringJUnit4ClassRunner类  
 @ContextConfiguration(locations = {"classpath:spring-mybatis.xml"})  
 
 public class TestMyBatis {
-	   private static Logger logger = Logger.getLogger(TestMyBatis.class);  
+	   private Logger logger = LoggerFactory.getLogger(getClass());
 	//  private ApplicationContext ac = null;  
 	    @Resource  
 	    private IUserService userService = null;  

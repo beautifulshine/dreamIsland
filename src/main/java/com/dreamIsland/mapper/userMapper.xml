@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN">
-
--<mapper namespace="com.dreamIsland.dao.UserDao">
+<mapper namespace="com.dreamIsland.dao.UserDao">
 
 
--<resultMap type="com.dreamIsland.dmo.User" id="BaseResultMap">
+<resultMap type="com.dreamIsland.model.User" id="BaseResultMap">
 
 <id jdbcType="INTEGER" property="id" column="id"/>
 
@@ -19,240 +18,15 @@
 
 
 
-<sql id="Base_Column_List"> id, user_name, password, age, </sql>
+    <sql id="Base_Column_List"> 
+        id, user_name, password, age
+    </sql>
 
 <!-- select user by userId -->
-
-
-
--<select id="getUserById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-select 
-<include refid="Base_Column_List"/>
-from user where id=#{0} 
+<select id="getUserById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+	select 	<include refid="Base_Column_List"/>
+	from user where id=#{id} 
 </select>
 
-
--<select id="searchUser" resultMap="BaseResultMap">
-select 
-<include refid="Base_Column_List"/>
-from user where ((email like CONCAT('%','${key}','%' )) or (nick_name like CONCAT('%','${key}','%' ))) limit #{offset},#{limit} 
-</select>
-
-<select id="getTeamUsers" resultMap="BaseResultMap" parameterType="java.lang.Integer"> select * from user where user_id in (select user_id from team_member where team_id=#{teamId}) </select>
-
-<!-- end -->
-
-
-<select id="getUserByEmail" resultMap="BaseResultMap" parameterType="java.lang.String"> select * from user where email=#{email,jdbcType=VARCHAR} </select>
-
-<!-- client login -->
-
-
-
--<select id="getUser" resultMap="BaseResultMap" parameterType="java.lang.String">
-select 
-<include refid="Base_Column_List"/>
-from user where email = #{0} and password=#{1} 
-</select>
-
-<!-- end -->
-
-
-<!--zhanghaogl userlist-->
-
-
-
--<select id="getUsers" resultMap="BaseResultMap">
-select * from user u 
-</select>
-
-<!-- end -->
-
-
-<!-- <select id="getUserCount" resultType="java.lang.Integer"> select count(*) from user </select> -->
-
-
-
--<select id="getUserCount" parameterType="java.util.Map" resultType="java.lang.Integer">
-select count(*) from user u left join game_bind g on u.game_id=g.game_id where 1=1 
-<if test="isForbid !=null"> and u.is_forbid=#{isForbid} </if>
-
-<if test="email !=null"> and u.email like concat(concat('%',#{email}),'%') </if>
-
-<if test="roleName !=null"> and g.role_name like concat(concat('%',#{roleName}),'%') </if>
-
-</select>
-
-
--<select id="getCount" parameterType="java.util.Map" resultType="java.lang.Integer">
-select count(*) from user u where 1=1 
-<if test="gameId !=null"> and u.gameId=#{gameId} </if>
-
-<if test="mobileNo !=null"> and u.mobile_no like concat(concat('%',#{mobileNo}),'%') </if>
-
-</select>
-
-
--<select id="queryzhanghaoByConditons" resultMap="BaseResultMap" parameterType="java.util.Map">
-select 
-<include refid="Base_Column_List"/>
-from user where is_forbid= #{isForbid} and( id= #{isForbid} or game_id= #{gameId}) limit #{offset},#{number} 
-</select>
-
-<select id="queryzhanghaoCountsByConditons" resultMap="BaseResultMap"> select count(*) from user where is_forbid= #{isForbid} and( id= #{isForbid} or game_id= #{gameId}) </select>
-
-<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer"> delete from user where id = #{id,jdbcType=INTEGER} </delete>
-
-<insert id="insert" parameterType="com.zblog.dmo.User"> insert into user (id, mobile_no, password, email, identity_type, identity_no, real_name, icon, nick_name, game_id, game_area, game ) values (#{id,jdbcType=INTEGER}, #{mobileNo,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{identityType,jdbcType=INTEGER}, #{identityNo,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{gameId,jdbcType=VARCHAR}, #{gameArea,jdbcType=VARCHAR}, #{game,jdbcType=VARCHAR} ) </insert>
-
-
--<insert id="register" parameterType="com.zblog.dmo.User" keyProperty="userId" useGeneratedKeys="true">
-insert into user 
-
--<trim suffixOverrides="," suffix=")" prefix="(">
-
-<if test="userId != null"> user_id, </if>
-
-<if test="mobileNo != null"> mobile_no, </if>
-
-<if test="password != null"> password, </if>
-
-<if test="email != null"> email, </if>
-
-<if test="identityType != null"> identity_type, </if>
-
-<if test="identityNo != null"> identity_no, </if>
-
-<if test="realName != null"> real_name, </if>
-
-<if test="icon != null"> icon, </if>
-
-<if test="nickName != null"> nick_name, </if>
-
-<if test="gameBind != null"> game_id, </if>
-
-<if test="gameArea != null"> game_area, </if>
-
-<if test="game != null"> game, </if>
-
-</trim>
-
-
--<trim suffixOverrides="," suffix=")" prefix="values (">
-
-<if test="userId != null"> #{userId,jdbcType=INTEGER}, </if>
-
-<if test="mobileNo != null"> #{mobileNo,jdbcType=VARCHAR}, </if>
-
-<if test="password != null"> #{password,jdbcType=VARCHAR}, </if>
-
-<if test="email != null"> #{email,jdbcType=VARCHAR}, </if>
-
-<if test="identityType != null"> #{identityType,jdbcType=INTEGER}, </if>
-
-<if test="identityNo != null"> #{identityNo,jdbcType=VARCHAR}, </if>
-
-<if test="realName != null"> #{realName,jdbcType=VARCHAR}, </if>
-
-<if test="icon != null"> #{icon,jdbcType=VARCHAR}, </if>
-
-<if test="nickName != null"> #{nickName,jdbcType=VARCHAR}, </if>
-
-<if test="gameBind != null"> #{gameBind.gameId,jdbcType=VARCHAR}, </if>
-
-<if test="gameArea != null"> #{gameArea,jdbcType=VARCHAR}, </if>
-
-<if test="game != null"> #{game,jdbcType=VARCHAR}, </if>
-
-</trim>
-
-</insert>
-
-
--<update id="changeStatus" parameterType="com.zblog.dmo.User">
-update user 
-<set> is_forbid=#{isForbid} </set>
-where user_id=#{userId} 
-</update>
-
-
--<update id="updateUser" parameterType="com.zblog.dmo.User">
-update user 
-
--<set>
-
-<if test="mobileNo != null"> mobile_no = #{mobileNo,jdbcType=VARCHAR}, </if>
-
-<if test="password != null"> password = #{password,jdbcType=VARCHAR}, </if>
-
-<if test="email != null"> email = #{email,jdbcType=VARCHAR}, </if>
-
-<if test="identityType != null"> identity_type = #{identityType,jdbcType=INTEGER}, </if>
-
-<if test="identityNo != null"> identity_no = #{identityNo,jdbcType=VARCHAR}, </if>
-
-<if test="realName != null"> real_name = #{realName,jdbcType=VARCHAR}, </if>
-
-<if test="icon != null"> icon = #{icon,jdbcType=VARCHAR}, </if>
-
-<if test="nickName != null"> nick_name = #{nickName,jdbcType=VARCHAR}, </if>
-
-<if test="gameId != null"> game_id = #{gameId,jdbcType=VARCHAR}, </if>
-
-<if test="gameArea != null"> game_area = #{gameArea,jdbcType=VARCHAR}, </if>
-
-<if test="game != null"> game = #{game,jdbcType=VARCHAR}, </if>
-
-</set>
-where user_id = #{userId,jdbcType=INTEGER} 
-</update>
-
-<update id="updateByPrimaryKey" parameterType="com.zblog.dmo.User"> update user set mobile_no = #{mobileNo,jdbcType=VARCHAR}, password = #{password,jdbcType=VARCHAR}, email = #{email,jdbcType=VARCHAR}, identity_type = #{identityType,jdbcType=INTEGER}, identity_no = #{identityNo,jdbcType=VARCHAR}, real_name = #{realName,jdbcType=VARCHAR}, icon = #{icon,jdbcType=VARCHAR}, nick_name = #{nickName,jdbcType=VARCHAR}, game_id = #{gameId,jdbcType=VARCHAR}, game_area = #{gameArea,jdbcType=VARCHAR}, game = #{game,jdbcType=VARCHAR} where id = #{id,jdbcType=INTEGER} </update>
-
-
--<insert id="addTeam" parameterType="com.zblog.dmo.Team" keyProperty="id" useGeneratedKeys="true">
-insert into team 
-
--<trim suffixOverrides="," suffix=")" prefix="(">
-
-<if test="name != null"> name, </if>
-
-<if test="createdTime != null"> created_time, </if>
-
-</trim>
-
-
--<trim suffixOverrides="," suffix=")" prefix="values (">
-
-<if test="name != null"> #{name}, </if>
-
-<if test="createdTime != null"> #{createdTime}, </if>
-
-</trim>
-
-</insert>
-
-
--<insert id="addTeamMember">
-insert into team_member 
-
--<trim suffixOverrides="," suffix=")" prefix="(">
-
-<if test="0 != null"> team_id, </if>
-
-<if test="1 != null"> user_id, </if>
-
-</trim>
-
-
--<trim suffixOverrides="," suffix=")" prefix="values (">
-
-<if test="0 != null"> #{0}, </if>
-
-<if test="1 != null"> #{1}, </if>
-
-</trim>
-
-</insert>
 
 </mapper>
