@@ -1,4 +1,4 @@
-package com.dreamIsland.dmo;
+package com.dreamIsland.model;
 
 public class User {
 	private Integer id;

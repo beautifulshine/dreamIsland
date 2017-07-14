@@ -3,7 +3,7 @@ package com.dreamIsland.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.dreamIsland.dmo.User;
+import com.dreamIsland.model.User;
 
 public interface UserDao {
 	public User getUser(String email ,String pwd);
