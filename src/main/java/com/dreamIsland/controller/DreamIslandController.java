@@ -15,11 +15,12 @@ import com.dreamIsland.service.IUserService;
 public class DreamIslandController {
 
 	 	@Resource  
-	    private IUserService userService;  
+	    private IUserService userService; 
 	      
 	    @RequestMapping("showUser")  
 	    public ModelAndView toIndex(Integer userId){  
 	        User user = userService.getUserById(userId);  
+	        
 	        return new ModelAndView("user","user",user);  
 		
 	}

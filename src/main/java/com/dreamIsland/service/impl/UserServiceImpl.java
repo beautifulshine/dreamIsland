@@ -12,7 +12,6 @@ import com.dreamIsland.service.IUserService;
 public class UserServiceImpl implements IUserService {
 	@Resource  
     private UserDao userDao;  
-    @Override  
     public User getUserById(int userId) {  
         return userDao.getUserById(userId);  
     }  

@@ -15,9 +15,6 @@
 <result jdbcType="INTEGER" property="age" column="age"/>
 
 </resultMap>
-
-
-
     <sql id="Base_Column_List"> 
         id, user_name, password, age
     </sql>
